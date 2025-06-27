@@ -1,0 +1,71 @@
+name: "merge-tarballs"
+description: "A GitHub Action to merge tarballs."
+author: "TheMrMilchmann"
+inputs:
+  archive:
+    description: "The path to write the merged archive to."
+    required: true
+  glob:
+    description: "A glob pattern matching the tarballs to merge."
+    required: true
+  compression:
+    description: "The compression method for the (merged) archive."
+    required: false
+    default: "gz"
+outputs:
+  archive:
+    description: "The path to the merged archive."
+    value: ${{ inputs.archive }}
+
+runs:
+  using: composite
+  steps:
+    - name: "Create temp dir"
+      shell: bash
+      run: |
+        TMPDIR=$(mktemp -d)
+        echo "TMPDIR=$TMPDIR" >> $GITHUB_ENV
+
+    - name: "Expand glob and extract tarballs"
+      shell: bash
+      run: |
+        set -e
+        shopt -s nullglob
+
+        TARFILES=( ${{ inputs.glob }} )
+        if [ ${#TARFILES[@]} -eq 0 ]; then
+          echo "No tarballs matched the pattern: ${{ inputs.glob }}"
+          exit 1
+        fi
+
+        echo "Found ${#TARFILES[@]} tarballs to merge."
+
+        for t in "${TARFILES[@]}"; do
+          echo "Extracting $t..."
+          case "$t" in
+            *.tar.gz|*.tgz) tar -xzf "$t" -C "$TMPDIR" ;;
+            *.tar.xz)       tar -xJf "$t" -C "$TMPDIR" ;;
+            *.tar.bz2)      tar -xjf "$t" -C "$TMPDIR" ;;
+            *.tar)          tar -xf "$t" -C "$TMPDIR" ;;
+            *) echo "Unsupported format: $t" && exit 1 ;;
+          esac
+        done
+
+    - name: "Create merged tarball"
+      shell: bash
+      run: |
+        case "${{ inputs.compression }}" in
+          gz) COMP="z" ;;
+          xz) COMP="J" ;;
+          bz2) COMP="j" ;;
+          none) COMP="" ;;
+          *) echo "Invalid compression method"; exit 1 ;;
+        esac
+
+        OUTPUT="${{ inputs.archive }}"
+        mkdir -p "$(dirname "$OUTPUT")"
+        tar -c${COMP}f "$OUTPUT" -C "$TMPDIR" .
+
+branding:
+  icon: archive
+  color: orange
