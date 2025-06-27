@@ -21,7 +21,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Merge Tarballs
-        uses: .
+        uses: ./
         with:
           archive: ./merged.tar.gz
           glob: ./test/**
