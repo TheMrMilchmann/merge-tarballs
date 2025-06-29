@@ -72,8 +72,9 @@ runs:
       run: |
         OUTPUT="${{ inputs.archive }}"
         mkdir -p "$(dirname "$OUTPUT")"
-        (cd "$TMPDIR" && zip -r 9 "$OUTPUT" .)
-        ls -lash
+        pushd "$TMPDIR" > /dev/null
+        zip -r -9 "$OLDPWD/$OUTPUT" .
+        popd > /dev/null
 
 branding:
   icon: archive
