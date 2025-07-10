@@ -51,30 +51,20 @@ runs:
           esac
         done
 
-#    - name: "Create merged tarball"
-#      shell: bash
-#      run: |
-#        case "${{ inputs.compression }}" in
-#          gz) COMP="z" ;;
-#          xz) COMP="J" ;;
-#          bz2) COMP="j" ;;
-#          none) COMP="" ;;
-#          *) echo "Invalid compression method"; exit 1 ;;
-#        esac
-#
-#        OUTPUT="${{ inputs.archive }}"
-#        mkdir -p "$(dirname "$OUTPUT")"
-#        tar -c${COMP}f "$OUTPUT" -C "$TMPDIR" .
-
-    # TODO: This should create a tar file, but the Central Portal does not accept tarballs apparently. So, I'm hacking this for now while waiting for Sonatype's support.
-    - name: "Create merged zip"
+    - name: "Create merged tarball"
       shell: bash
       run: |
+        case "${{ inputs.compression }}" in
+          gz) COMP="z" ;;
+          xz) COMP="J" ;;
+          bz2) COMP="j" ;;
+          none) COMP="" ;;
+          *) echo "Invalid compression method"; exit 1 ;;
+        esac
+
         OUTPUT="${{ inputs.archive }}"
         mkdir -p "$(dirname "$OUTPUT")"
-        pushd "$TMPDIR" > /dev/null
-        zip -r -9 "$OLDPWD/$OUTPUT" .
-        popd > /dev/null
+        tar -c${COMP}f "$OUTPUT" -C "$TMPDIR" .
 
 branding:
   icon: archive
