@@ -64,7 +64,7 @@ runs:
 
         OUTPUT="${{ inputs.archive }}"
         mkdir -p "$(dirname "$OUTPUT")"
-        tar -c${COMP}f "$OUTPUT" -C "$TMPDIR" -- *
+        ( cd "$TMPDIR" && tar -c${COMP}f "$OUTPUT" * )
 
 branding:
   icon: archive
