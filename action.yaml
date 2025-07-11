@@ -62,9 +62,9 @@ runs:
           *) echo "Invalid compression method"; exit 1 ;;
         esac
 
-        OUTPUT="${{ inputs.archive }}"
+        OUTPUT="$(realpath "${{ inputs.archive }}")"
         mkdir -p "$(dirname "$OUTPUT")"
-        ( cd "$TMPDIR" && tar -c${COMP}f "$OUTPUT" * )
+        (cd "$TMPDIR" && tar -c${COMP}f "$OUTPUT" *)
 
 branding:
   icon: archive
