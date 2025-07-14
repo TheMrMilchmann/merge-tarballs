@@ -25,3 +25,7 @@ jobs:
         with:
           archive: ./merged.tar.gz
           glob: ./test/**
+
+      - name: Test Merged Artifact
+        shell: bash
+        run: test -f ./merged.tar.gz
