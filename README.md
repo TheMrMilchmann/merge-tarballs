@@ -33,6 +33,15 @@ outputs:
 | `archive` | The path to the merged archive. |
 
 
+## Versioning
+
+This action is strictly following [SemVer 2.0.0](https://semver.org/spec/v2.0.0.html).
+Thus, it is recommended to pin the action against specific MAJOR version. This
+can be achieved by using the `v${MAJOR}` branch.
+
+To get an overview about the action's versions, see the [changelog](docs/changelog/README.md).
+
+
 ## License
 
 ```
