@@ -2,15 +2,13 @@ name: CI
 
 on:
   push:
-    branches-ignore:
-      - 'v*'
-    paths-ignore:
-      - '**.md'
+    branches:
+      - "master"
+      - "release/**"
+    tags-ignore:
+      - "**"
   pull_request:
-    branches-ignore:
-      - 'v*'
-    paths-ignore:
-      - '**.md'
+  workflow_dispatch:
 
 permissions:
   contents: read
