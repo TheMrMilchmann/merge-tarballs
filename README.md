@@ -1,5 +1,7 @@
 # merge-tarballs
 
+[![License](https://img.shields.io/badge/license-MIT-green.svg?style=for-the-badge&label=License)](https://github.com/TheMrMilchmann/central-portal-actions/blob/master/LICENSE)
+
 A GitHub Action to merge tarballs.
 
 
