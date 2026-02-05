@@ -3,6 +3,36 @@
 A GitHub Action to merge tarballs.
 
 
+## Usage
+
+```yaml
+steps:
+  - id: bundle
+    uses: TheMrMilchmann/merge-tarballs@v1
+    with:
+      glob: artifacts/**
+      archive: ./bundle.tgz
+      
+outputs:
+  archive: ${{ steps.bundle.outputs.archive }}
+```
+
+### Inputs
+
+| Input         | Description                                      | Default |
+|---------------|--------------------------------------------------|---------|
+| `archive`     | The path to write the merged archive to.         |         |
+| `glob`        | A glob pattern matching the tarballs to merge.   |         |
+| `compression` | The compression method for the (merged) archive. | `"gz"`  |
+
+
+### Outputs
+
+| Output    | Description                     |
+|-----------|---------------------------------|
+| `archive` | The path to the merged archive. |
+
+
 ## License
 
 ```
