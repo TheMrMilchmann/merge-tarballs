@@ -4,7 +4,8 @@
 
 ### Version History
 
-* 2026-02-07 [1.0.0](1.0.0.md) (latest)
+* ????-??-?? [1.1.0](1.0.0.md) (latest)
+* 2026-02-07 [1.0.0](1.0.0.md)
 
 
 This library is strictly following [SemVer 2.0.0](https://semver.org/spec/v2.0.0.html).
